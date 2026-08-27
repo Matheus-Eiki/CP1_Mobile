@@ -10,6 +10,15 @@ export default function Index() {
         Bem-vindo ao aplicativo!
       </Text>
 
+      {/* Botão de Login */}
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={() => router.push("/Login")}
+      >
+        <Text style={styles.textoBotao}>Login</Text>
+      </TouchableOpacity>
+
+      {/* Botão de Cadastro */}
       <TouchableOpacity
         style={styles.botao}
         onPress={() => router.push("/Cadastro")}
@@ -45,6 +54,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 40,
     borderRadius: 8,
+    marginBottom: 15,
+    width: 250,
+    alignItems: "center",
   },
 
   textoBotao: {

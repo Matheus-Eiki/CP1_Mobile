@@ -93,7 +93,7 @@ export default function Login() {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => router.push("/cadastro")}
+        onPress={() => router.push("/Cadastro")}
       >
         <Text style={styles.cadastro}>
           Não possui uma conta? Cadastre-se

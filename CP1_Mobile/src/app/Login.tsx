@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
@@ -14,38 +15,57 @@ export default function Login() {
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
 
+  useEffect(() => {
+    verificarLogin();
+  }, []);
+
+  async function verificarLogin() {
+    try {
+      const usuarioLogado = await AsyncStorage.getItem("@usuario_logado");
+
+      if (usuarioLogado) {
+        // Salva uma informação para a tela inicial mostrar o alerta
+        await AsyncStorage.setItem("@mostrar_alerta_login", "true");
+
+        // Volta imediatamente para a tela inicial
+        router.replace("/");
+      }
+    } catch (error) {
+      console.error("Erro ao verificar login:", error);
+    }
+  }
+
   async function fazerLogin() {
-    // Limpa a mensagem de erro anterior
     setErro("");
 
-    // Verifica campos vazios
     if (!email.trim() || !senha) {
       setErro("Preencha o e-mail e a senha.");
       return;
     }
 
     try {
-      // Busca o usuário salvo
       const dados = await AsyncStorage.getItem("@usuario");
 
-      // Verifica se existe usuário
       if (!dados) {
         setErro("Nenhum usuário cadastrado. Faça seu cadastro primeiro.");
         return;
       }
 
-      // Converte o JSON para objeto
       const usuario = JSON.parse(dados);
 
-      // Verifica e-mail e senha
       if (
         email.trim().toLowerCase() === usuario.email.toLowerCase() &&
         senha === usuario.senha
       ) {
-        // Login correto
+        // Salva o usuário como logado
+        await AsyncStorage.setItem(
+          "@usuario_logado",
+          JSON.stringify(usuario)
+        );
+
+        // Volta para a tela inicial
         router.replace("/");
       } else {
-        // Login incorreto
         setErro("E-mail ou senha incorretos.");
       }
     } catch (error) {
@@ -76,7 +96,6 @@ export default function Login() {
         onChangeText={setSenha}
       />
 
-      {/* Mensagem de erro */}
       {erro !== "" && (
         <Text style={styles.erro}>
           {erro}

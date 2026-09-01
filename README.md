@@ -45,3 +45,7 @@ Para executar este projeto localmente, é necessário ter instalado:
    ```
 
 3. Leia o QR Code no terminal utilizando o Expo Go no seu dispositivo móvel, ou pressione `a` para abrir no emulador Android e `i` para o simulador iOS.
+
+**## INTEGRANTES:**
+**RM: 560723 - DAVIS JUNIOR**
+**RM: 559483 - MATHEUS EIKI**
